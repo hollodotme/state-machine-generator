@@ -10,7 +10,8 @@ This package is based on [Sebastian Bergmann's state repository](https://github.
 * Namespaces were added
 * States can be represented as and reconstituted from strings
 * Output paths for main class, state classes and interface, test can be configured in the specification
-* Creating a template specification file
+* Command for creating a template specification file
+* Test class update for PHPUnit 6
 * Generator is distributed as a PHAR file
 
 ## Usage

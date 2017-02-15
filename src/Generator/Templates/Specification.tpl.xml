@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <specification>
 	<output>
-		<path name="MainClass" path="./src"/>
-		<path name="StateClasses" path="./src/States"/>
-		<path name="TestClass" path="./tests"/>
+		<path for="mainClass" dir="./src"/>
+		<path for="stateClasses" dir="./src/States"/>
+		<path for="testClass" dir="./tests"/>
 	</output>
 	<configuration>
-		<mainClass name="Door" final="true" abstract="false"/>
-		<stateInterface name="DoorState"/>
-		<abstractStateClass name="AbstractDoorState" final="false" abstract="true"/>
+		<config for="mainClass" name="Door" final="true" abstract="false"/>
+		<config for="stateInterface" name="DoorState" final="false" abstract="false"/>
+		<config for="abstractStateClass" name="AbstractDoorState" final="false" abstract="true"/>
 	</configuration>
 	<states>
 		<state name="OpenDoorState" query="isOpen"/>
