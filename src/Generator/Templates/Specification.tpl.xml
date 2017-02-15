@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <specification>
+	<meta>
+		<author name="hollodotme" email="hw@hollo.me"/>
+	</meta>
 	<output>
 		<path for="mainClass" dir="./src"/>
 		<path for="stateClasses" dir="./src/States"/>
 		<path for="testClass" dir="./tests"/>
 	</output>
 	<configuration>
-		<config for="mainClass" name="Door" final="true" abstract="false"/>
-		<config for="stateInterface" name="DoorState" final="false" abstract="false"/>
-		<config for="abstractStateClass" name="AbstractDoorState" final="false" abstract="true"/>
+		<config for="mainClass" fqcn="YourVendor\YourProject\Door"/>
+		<config for="stateInterface" fqcn="YourVendor\YourProject\States\Interfaces\DoorState"/>
+		<config for="abstractStateClass" fqcn="YourVendor\YourProject\States\AbstractDoorState"/>
+		<config for="illegalTransitionException" fqcn="YourVendor\YourProject\States\Exceptions\IllegalStateTransition"/>
 	</configuration>
 	<states>
 		<state name="OpenDoorState" query="isOpen"/>

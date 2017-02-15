@@ -7,6 +7,7 @@ namespace hollodotme\StateMachineGenerator\Generator;
 
 use hollodotme\StateMachineGenerator\Generator\Exceptions\ConfigurationNotFound;
 use hollodotme\StateMachineGenerator\Generator\Exceptions\OutputSettingNotFound;
+use hollodotme\StateMachineGenerator\Generator\Types\Author;
 use hollodotme\StateMachineGenerator\Generator\Types\Configuration;
 use hollodotme\StateMachineGenerator\Generator\Types\Operation;
 use hollodotme\StateMachineGenerator\Generator\Types\OutputSetting;
@@ -15,10 +16,10 @@ use hollodotme\StateMachineGenerator\Generator\Types\State;
 use hollodotme\StateMachineGenerator\Generator\Types\Transition;
 
 /**
- * Class SpecificationParser
+ * Class Specification
  * @package hollodotme\StateMachineGenerator\Generator
  */
-final class SpecificationParser
+final class Specification
 {
 	/** @var \SimpleXMLElement */
 	private $xml;
@@ -82,20 +83,12 @@ final class SpecificationParser
 		{
 			$for = (string)$config->attributes()['for'];
 
-			$configurations[ $for ] = new Configuration(
-				$for,
-				(string)$config->attributes()['name'],
-				((string)$config->attributes()['final'] == 'true'),
-				((string)$config->attributes()['abstract'] == 'true')
-			);
+			$configurations[ $for ] = new Configuration( $for, (string)$config->attributes()['fqcn'] );
 		}
 
 		return $configurations;
 	}
 
-	/**
-	 * @return array
-	 */
 	public function getQueries() : array
 	{
 		return array_column( $this->getStates(), 'query' );
@@ -151,5 +144,22 @@ final class SpecificationParser
 		}
 
 		return $states;
+	}
+
+	public function getAuthors() : array
+	{
+		$authors = [];
+
+		$authorElements = $this->xml->xpath( '/specification/meta/author' );
+
+		foreach ( $authorElements as $authorElement )
+		{
+			$authors[] = new Author(
+				(string)$authorElement->attributes()['name'],
+				(string)$authorElement->attributes()['email']
+			);
+		}
+
+		return $authors;
 	}
 }
