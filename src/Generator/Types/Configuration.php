@@ -15,20 +15,12 @@ final class Configuration
 	private $for;
 
 	/** @var string */
-	private $name;
+	private $fqcn;
 
-	/** @var bool */
-	private $isFinal;
-
-	/** @var bool */
-	private $isAbstract;
-
-	public function __construct( string $for, string $name, bool $isFinal, bool $isAbstract )
+	public function __construct( string $for, string $fqcn )
 	{
-		$this->for        = $for;
-		$this->name       = $name;
-		$this->isFinal    = $isFinal;
-		$this->isAbstract = $isAbstract;
+		$this->for  = $for;
+		$this->fqcn = $fqcn;
 	}
 
 	public function getFor() : string
@@ -36,18 +28,20 @@ final class Configuration
 		return $this->for;
 	}
 
-	public function getName() : string
+	public function getFullQualifiedClassName() : string
 	{
-		return $this->name;
+		return ltrim( $this->fqcn, '\\' );
 	}
 
-	public function isIsFinal() : bool
+	public function getClassName() : string
 	{
-		return $this->isFinal;
+		$parts = explode( '\\', $this->fqcn );
+
+		return end( $parts );
 	}
 
-	public function isIsAbstract() : bool
+	public function getNamespace() : string
 	{
-		return $this->isAbstract;
+		return join( '\\', array_filter( array_slice( explode( '\\', $this->fqcn ), 0, -1 ) ) );
 	}
 }

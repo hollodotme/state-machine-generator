@@ -19,7 +19,7 @@ final class TemplateFile
 		$this->name = $name;
 	}
 
-	public function __toString() : string
+	public function toString() : string
 	{
 		return __DIR__ . '/../Templates/' . $this->name . '.tpl';
 	}

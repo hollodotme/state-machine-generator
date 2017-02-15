@@ -5,7 +5,8 @@
 
 namespace hollodotme\StateMachineGenerator\ConsoleCommands;
 
-use hollodotme\StateMachineGenerator\Generator\SpecificationParser;
+use hollodotme\StateMachineGenerator\Generator\AbstractStateClassGenerator;
+use hollodotme\StateMachineGenerator\Generator\Specification;
 use hollodotme\StateMachineGenerator\Generator\Types\SpecificationFile;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -40,13 +41,10 @@ final class GenerateStateMachineCommand extends Command
 			return 1;
 		}
 
-		$parser = new SpecificationParser( $specFile );
+		$specification               = new Specification( $specFile );
+		$abstractStateClassGenerator = new AbstractStateClassGenerator( $specification );
 
-		print_r( $parser->getOutputSettings() );
-		print_r( $parser->getConfigurations() );
-		print_r( $parser->getStates() );
-		print_r( $parser->getOperations() );
-		print_r( $parser->getQueries() );
+		print_r( $abstractStateClassGenerator->generate() );
 
 		return 0;
 	}
