@@ -25,7 +25,7 @@ final class StateInterfaceGenerator extends AbstractGenerator
 		$methodTemplate       = file_get_contents( (new TemplateFile( Template::STATE_INTERFACE_METHOD ))->toString() );
 		$stateInterfaceConfig = $spec->getConfiguration( Config::STATE_INTERFACE );
 		$outputDir            = $spec->getOutputSetting( 'stateInterface' )->getDir();
-		$outputFilePath       = $outputDir . DIRECTORY_SEPARATOR . $stateInterfaceConfig->getClassName();
+		$outputFilePath       = sprintf( '%s/%s.php', $outputDir, $stateInterfaceConfig->getClassName() );
 
 		foreach ( $spec->getOperations() as $operation )
 		{

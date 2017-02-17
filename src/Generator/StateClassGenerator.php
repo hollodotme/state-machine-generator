@@ -5,50 +5,76 @@
 
 namespace hollodotme\StateMachineGenerator\Generator;
 
-use hollodotme\StateMachineGenerator\Generator\Types\CodeFile;
+use hollodotme\StateMachineGenerator\Generator\Contants\Config;
+use hollodotme\StateMachineGenerator\Generator\Contants\Template;
+use hollodotme\StateMachineGenerator\Generator\Types\OutputFile;
+use hollodotme\StateMachineGenerator\Generator\Types\State;
 use hollodotme\StateMachineGenerator\Generator\Types\TemplateFile;
 
 /**
  * Class StateClassGenerator
  * @package hollodotme\StateMachineGenerator\Generator
  */
-final class StateClassGenerator
+final class StateClassGenerator extends AbstractGenerator
 {
-	public function generate( array $data, string $className, string $abstractClassName )
-	{
-		$buffer   = '';
-		$template = file_get_contents( new TemplateFile( 'StateClassMethod' ) );
+	/** @var State */
+	private $state;
 
-		foreach ( $data['transitions'] as $operation => $to )
+	public function __construct( Specification $specification, State $state )
+	{
+		parent::__construct( $specification );
+		$this->state = $state;
+	}
+
+	public function generate() : OutputFile
+	{
+		$spec = $this->getSpecification();
+
+		$methodsContent           = '';
+		$authorsContent           = join( ', ', $spec->getAuthors() );
+		$stateInterfaceConfig     = $spec->getConfiguration( Config::STATE_INTERFACE );
+		$abstractStateClassConfig = $spec->getConfiguration( Config::ABSTRACT_STATE_CLASS );
+		$methodTemplate           = file_get_contents( (new TemplateFile( Template::STATE_CLASS_METHOD ))->toString() );
+		$outputDir                = $spec->getOutputSetting( 'stateClasses' )->getDir();
+		$outputFilePath           = sprintf( '%s/%s.php', $outputDir, $this->state->getName() );
+
+		foreach ( $this->state->getTransitions() as $transition )
 		{
-			$buffer .= str_replace(
+			$methodsContent .= str_replace(
 				[
 					'___STATE___',
 					'___METHOD___',
+					'___INTERFACE_NAME___',
 				],
 				[
-					$to,
-					$operation,
+					$transition->to(),
+					$transition->getOperation(),
+					$stateInterfaceConfig->getClassName(),
 				],
-				$template
+				$methodTemplate . "\n"
 			);
 		}
 
-		file_put_contents(
-			new CodeFile( $className ),
-			str_replace(
-				[
-					'___CLASS___',
-					'___ABSTRACT___',
-					'___METHODS___',
-				],
-				[
-					$className,
-					$abstractClassName,
-					$buffer,
-				],
-				file_get_contents( new TemplateFile( 'StateClass' ) )
-			)
+		$content = str_replace(
+			[
+				'___AUTHORS___',
+				'___NAMESPACE___',
+				'___USE_STATE_INTERFACE___',
+				'___CLASS_NAME___',
+				'___ABSTRACT_STATE_CLASS___',
+				'___METHODS___',
+			],
+			[
+				$authorsContent,
+				$abstractStateClassConfig->getNamespace(),
+				$stateInterfaceConfig->getFullQualifiedClassName(),
+				$this->state->getName(),
+				$abstractStateClassConfig->getClassName(),
+				rtrim( $methodsContent, "\n" ),
+			],
+			file_get_contents( (new TemplateFile( Template::STATE_CLASS ))->toString() )
 		);
+
+		return new OutputFile( $outputFilePath, $content );
 	}
 }

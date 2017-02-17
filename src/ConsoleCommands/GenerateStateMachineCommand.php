@@ -5,8 +5,12 @@
 
 namespace hollodotme\StateMachineGenerator\ConsoleCommands;
 
+use hollodotme\StateMachineGenerator\Generator\AbstractGenerator;
 use hollodotme\StateMachineGenerator\Generator\AbstractStateClassGenerator;
+use hollodotme\StateMachineGenerator\Generator\MainClassGenerator;
 use hollodotme\StateMachineGenerator\Generator\Specification;
+use hollodotme\StateMachineGenerator\Generator\StateClassGenerator;
+use hollodotme\StateMachineGenerator\Generator\StateInterfaceGenerator;
 use hollodotme\StateMachineGenerator\Generator\Types\SpecificationFile;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -41,10 +45,39 @@ final class GenerateStateMachineCommand extends Command
 			return 1;
 		}
 
-		$specification               = new Specification( $specFile );
-		$abstractStateClassGenerator = new AbstractStateClassGenerator( $specification );
+		$specification = new Specification( $specFile );
+		$generators    = [
+			new StateInterfaceGenerator( $specification ),
+			new AbstractStateClassGenerator( $specification ),
+			new MainClassGenerator( $specification ),
+		];
 
-		print_r( $abstractStateClassGenerator->generate() );
+		foreach ( $specification->getStates() as $state )
+		{
+			$generators[] = new StateClassGenerator( $specification, $state );
+		}
+
+		/** @var AbstractGenerator $generator */
+		foreach ( $generators as $generator )
+		{
+			$outputFile = $generator->generate();
+
+			if ( !file_exists( $outputFile->getDir() ) )
+			{
+				@mkdir( $outputFile->getDir(), 0777, true );
+			}
+
+			$bytesWritten = file_put_contents( $outputFile->getFilePath(), $outputFile->getContent() );
+
+			if ( $bytesWritten > 0 )
+			{
+				$style->writeln( "Generated file {$outputFile->getFilePath()} ({$bytesWritten} bytes)" );
+			}
+			else
+			{
+				$style->error( "Could not write file {$outputFile->getFilePath()}" );
+			}
+		}
 
 		return 0;
 	}

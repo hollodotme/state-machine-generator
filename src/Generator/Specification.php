@@ -24,9 +24,13 @@ final class Specification
 	/** @var \SimpleXMLElement */
 	private $xml;
 
+	/** @var string */
+	private $specFileDir;
+
 	public function __construct( SpecificationFile $specificationFile )
 	{
-		$this->xml = simplexml_load_file( (string)$specificationFile );
+		$this->xml         = simplexml_load_file( $specificationFile->toString() );
+		$this->specFileDir = dirname( $specificationFile->toString() );
 	}
 
 	public function getOutputSetting( string $for ) : OutputSetting
@@ -53,7 +57,10 @@ final class Specification
 		{
 			$for = (string)$path->attributes()['for'];
 
-			$outputSettings[ $for ] = new OutputSetting( $for, (string)$path->attributes()['dir'] );
+			$outputSettings[ $for ] = new OutputSetting(
+				$for,
+				$this->specFileDir . DIRECTORY_SEPARATOR . (string)$path->attributes()['dir']
+			);
 		}
 
 		return $outputSettings;

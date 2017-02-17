@@ -28,7 +28,7 @@ final class AbstractStateClassGenerator extends AbstractGenerator
 		$stateInterfaceConfig      = $spec->getConfiguration( Config::STATE_INTERFACE );
 		$transitionExceptionConfig = $spec->getConfiguration( Config::ILLEGAL_TRANSITION_EXCEPTION );
 		$outputDir                 = $spec->getOutputSetting( 'stateClasses' )->getDir();
-		$outputFilePath            = $outputDir . DIRECTORY_SEPARATOR . $abstractStateClassConfig->getClassName();
+		$outputFilePath            = sprintf('%s/%s.php', $outputDir, $abstractStateClassConfig->getClassName() );
 
 		foreach ( $spec->getOperations() as $operation )
 		{

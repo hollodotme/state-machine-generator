@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <specification>
 	<meta>
+		<!-- NOTE: You can add multiple author nodes. -->
 		<author name="hollodotme" email="hw@hollo.me"/>
 	</meta>
 	<output>
+		<!-- NOTE: Paths must be relative to the directory of this file. -->
 		<path for="mainClass" dir="./src"/>
 		<path for="stateInterface" dir="./src/States/Interfaces"/>
 		<path for="stateClasses" dir="./src/States"/>
 		<path for="testClass" dir="./tests"/>
 	</output>
 	<configuration>
+		<!-- NOTE: The value in "fqcn" attribute must be the full qualified class/interface name. -->
 		<config for="mainClass" fqcn="YourVendor\YourProject\Door"/>
 		<config for="stateInterface" fqcn="YourVendor\YourProject\States\Interfaces\DoorState"/>
 		<config for="abstractStateClass" fqcn="YourVendor\YourProject\States\AbstractDoorState"/>

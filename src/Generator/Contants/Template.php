@@ -23,4 +23,10 @@ final class Template
 
 	public const STATE_CLASS_METHOD          = 'StateClassMethod';
 
+	public const MAIN_CLASS_OPERATION        = 'MainClassOperation';
+
+	public const MAIN_CLASS_QUERY            = 'MainClassQuery';
+
+	public const MAIN_CLASS                  = 'MainClass';
+
 }

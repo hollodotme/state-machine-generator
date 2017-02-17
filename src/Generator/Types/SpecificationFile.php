@@ -24,7 +24,7 @@ final class SpecificationFile
 		return file_exists( realpath( $this->filePath ) );
 	}
 
-	public function __toString() : string
+	public function toString() : string
 	{
 		return realpath( $this->filePath );
 	}

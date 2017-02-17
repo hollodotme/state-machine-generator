@@ -23,6 +23,11 @@ final class OutputFile
 		$this->content  = $content;
 	}
 
+	public function getDir() : string
+	{
+		return dirname( $this->filePath );
+	}
+
 	public function getFilePath() : string
 	{
 		return $this->filePath;
