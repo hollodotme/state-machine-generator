@@ -63,6 +63,7 @@ final class StateClassGenerator extends AbstractGenerator
 				'___CLASS_NAME___',
 				'___ABSTRACT_STATE_CLASS___',
 				'___METHODS___',
+				'___STATE_STRING_CONSTANT___',
 			],
 			[
 				$authorsContent,
@@ -71,6 +72,7 @@ final class StateClassGenerator extends AbstractGenerator
 				$this->state->getName(),
 				$abstractStateClassConfig->getClassName(),
 				rtrim( $methodsContent, "\n" ),
+				$this->state->getConstantName(),
 			],
 			file_get_contents( (new TemplateFile( Template::STATE_CLASS ))->toString() )
 		);

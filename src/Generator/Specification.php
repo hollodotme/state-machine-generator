@@ -7,6 +7,8 @@ namespace hollodotme\StateMachineGenerator\Generator;
 
 use hollodotme\StateMachineGenerator\Generator\Exceptions\ConfigurationNotFound;
 use hollodotme\StateMachineGenerator\Generator\Exceptions\OutputSettingNotFound;
+use hollodotme\StateMachineGenerator\Generator\Exceptions\StateNotFound;
+use hollodotme\StateMachineGenerator\Generator\Exceptions\TransitionNotFound;
 use hollodotme\StateMachineGenerator\Generator\Types\Author;
 use hollodotme\StateMachineGenerator\Generator\Types\Configuration;
 use hollodotme\StateMachineGenerator\Generator\Types\Operation;
@@ -122,6 +124,18 @@ final class Specification
 		return $operations;
 	}
 
+	public function getState( $stateName ) : State
+	{
+		$states = $this->getStates();
+
+		if ( isset( $states[ $stateName ] ) )
+		{
+			return $states[ $stateName ];
+		}
+
+		throw (new StateNotFound())->withStateName( $stateName );
+	}
+
 	/**
 	 * @return array|State[]
 	 */
@@ -133,7 +147,11 @@ final class Specification
 		foreach ( $elements as $stateElement )
 		{
 			$name            = (string)$stateElement->attributes()['name'];
-			$states[ $name ] = new State( $name, (string)$stateElement->attributes()['query'] );
+			$states[ $name ] = new State(
+				$name,
+				(string)$stateElement->attributes()['query'],
+				(string)$stateElement->attributes()['stringRepresentation']
+			);
 		}
 
 		$transitions = $this->xml->xpath( '/specification/transitions/transition' );
@@ -168,5 +186,31 @@ final class Specification
 		}
 
 		return $authors;
+	}
+
+	public function getTargetStateOfOperation( Operation $operation ) : State
+	{
+		$xpath       = sprintf( '/specification/transitions/transition[@operation="%s"]', $operation->getName() );
+		$transitions = $this->xml->xpath( $xpath );
+
+		if ( !isset( $transitions[0] ) )
+		{
+			throw (new TransitionNotFound())->withOperation( $operation->getName() );
+		}
+
+		$targetState = (string)$transitions[0]->attributes()['to'];
+		$xpath       = sprintf( '/specification/states/state[@name="%s"]', $targetState );
+		$states      = $this->xml->xpath( $xpath );
+
+		if ( !isset( $states[0] ) )
+		{
+			throw (new StateNotFound())->withStateName( $targetState );
+		}
+
+		return new State(
+			(string)$states[0]->attributes()['name'],
+			(string)$states[0]->attributes()['query'],
+			(string)$states[0]->attributes()['stringRepresentation']
+		);
 	}
 }

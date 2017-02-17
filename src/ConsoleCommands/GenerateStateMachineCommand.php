@@ -11,6 +11,8 @@ use hollodotme\StateMachineGenerator\Generator\MainClassGenerator;
 use hollodotme\StateMachineGenerator\Generator\Specification;
 use hollodotme\StateMachineGenerator\Generator\StateClassGenerator;
 use hollodotme\StateMachineGenerator\Generator\StateInterfaceGenerator;
+use hollodotme\StateMachineGenerator\Generator\StateStringExceptionGenerator;
+use hollodotme\StateMachineGenerator\Generator\TransitionsExceptionGenerator;
 use hollodotme\StateMachineGenerator\Generator\Types\SpecificationFile;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -48,6 +50,8 @@ final class GenerateStateMachineCommand extends Command
 		$specification = new Specification( $specFile );
 		$generators    = [
 			new StateInterfaceGenerator( $specification ),
+			new TransitionsExceptionGenerator( $specification ),
+			new StateStringExceptionGenerator( $specification ),
 			new AbstractStateClassGenerator( $specification ),
 			new MainClassGenerator( $specification ),
 		];

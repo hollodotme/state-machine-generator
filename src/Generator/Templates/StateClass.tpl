@@ -14,4 +14,9 @@ use ___USE_STATE_INTERFACE___;
 final class ___CLASS_NAME___ extends ___ABSTRACT_STATE_CLASS___
 {
 ___METHODS___
+
+	public function toString() : string
+	{
+		return self::___STATE_STRING_CONSTANT___;
+	}
 }

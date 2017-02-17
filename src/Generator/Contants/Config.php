@@ -11,11 +11,13 @@ namespace hollodotme\StateMachineGenerator\Generator\Contants;
  */
 abstract class Config
 {
-	public const MAIN_CLASS                   = 'mainClass';
+	public const MAIN_CLASS                     = 'mainClass';
 
-	public const ABSTRACT_STATE_CLASS         = 'abstractStateClass';
+	public const ABSTRACT_STATE_CLASS           = 'abstractStateClass';
 
-	public const STATE_INTERFACE              = 'stateInterface';
+	public const STATE_INTERFACE                = 'stateInterface';
 
-	public const ILLEGAL_TRANSITION_EXCEPTION = 'illegalTransitionException';
+	public const ILLEGAL_TRANSITION_EXCEPTION   = 'illegalTransitionException';
+
+	public const INVALID_STATE_STRING_EXCEPTION = 'invalidStateStringException';
 }

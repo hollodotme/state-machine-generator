@@ -6,10 +6,11 @@
 	</meta>
 	<output>
 		<!-- NOTE: Paths must be relative to the directory of this file. -->
-		<path for="mainClass" dir="./src"/>
-		<path for="stateInterface" dir="./src/States/Interfaces"/>
-		<path for="stateClasses" dir="./src/States"/>
-		<path for="testClass" dir="./tests"/>
+		<path for="mainClass" dir="output"/>
+		<path for="stateInterface" dir="output/States/Interfaces"/>
+		<path for="stateClasses" dir="output/States"/>
+		<path for="testClass" dir="output/tests"/>
+		<path for="exceptions" dir="output/States/Exceptions"/>
 	</output>
 	<configuration>
 		<!-- NOTE: The value in "fqcn" attribute must be the full qualified class/interface name. -->
@@ -17,11 +18,12 @@
 		<config for="stateInterface" fqcn="YourVendor\YourProject\States\Interfaces\DoorState"/>
 		<config for="abstractStateClass" fqcn="YourVendor\YourProject\States\AbstractDoorState"/>
 		<config for="illegalTransitionException" fqcn="YourVendor\YourProject\States\Exceptions\IllegalStateTransition"/>
+		<config for="invalidStateStringException" fqcn="YourVendor\YourProject\States\Exceptions\InvalidStateString"/>
 	</configuration>
 	<states>
-		<state name="OpenDoorState" query="isOpen"/>
-		<state name="ClosedDoorState" query="isClosed"/>
-		<state name="LockedDoorState" query="isLocked"/>
+		<state name="OpenDoorState" query="isOpen" stringRepresentation="open"/>
+		<state name="ClosedDoorState" query="isClosed" stringRepresentation="closed"/>
+		<state name="LockedDoorState" query="isLocked" stringRepresentation="locked"/>
 	</states>
 	<transitions>
 		<transition from="ClosedDoorState" to="OpenDoorState" operation="open"/>

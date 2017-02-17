@@ -12,4 +12,8 @@ namespace ___NAMESPACE___;
 interface ___INTERFACE_NAME___
 {
 ___METHODS___
+
+	public function toString() : string;
+
+	public function __toString() : string;
 }

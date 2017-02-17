@@ -17,13 +17,13 @@ class ___CLASS_NAME___ extends \LogicException
 	public function getDesiredState() : string
 	{
 		return $this->desiredState;
-}
+	}
 
-public function withDesiredState( string $desiredState ) : ___CLASS_NAME___
-{
-$this->desiredState = $desiredState;
-$this->message = sprintf('Illegal state transition [desiredState: %s].', $desiredState);
+	public function withDesiredState( string $desiredState ) : ___CLASS_NAME___
+	{
+		$this->desiredState = $desiredState;
+		$this->message      = sprintf('Illegal state transition [desiredState: %s].', $desiredState);
 
-return $this;
-}
+		return $this;
+	}
 }

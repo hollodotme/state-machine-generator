@@ -1,1 +1,1 @@
-public function ___METHOD___() : ___INTERFACE_NAME___;
+	public function ___METHOD___() : ___INTERFACE_NAME___;

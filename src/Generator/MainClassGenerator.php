@@ -39,12 +39,10 @@ final class MainClassGenerator extends AbstractGenerator
 				[
 					'___ILLEGAL_TRANSITION_EXCEPTION___',
 					'___METHOD___',
-					'___STATE_INTERFACE___',
 				],
 				[
 					$illegalTransitionExceptionConfig->getClassName(),
 					$operation->getName(),
-					$stateInterfaceConfig->getClassName(),
 				],
 				$operationTemplate . "\n"
 			);
