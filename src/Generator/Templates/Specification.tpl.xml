@@ -2,15 +2,15 @@
 <specification>
 	<meta>
 		<!-- NOTE: You can add multiple author nodes. -->
-		<author name="hollodotme" email="hw@hollo.me"/>
+		<author name="Your Name" email="you@example.com"/>
 	</meta>
 	<output>
 		<!-- NOTE: Paths must be relative to the directory of this file. -->
-		<path for="mainClass" dir="output"/>
-		<path for="stateInterface" dir="output/States/Interfaces"/>
-		<path for="stateClasses" dir="output/States"/>
-		<path for="testClasses" dir="output/tests"/>
-		<path for="exceptions" dir="output/States/Exceptions"/>
+		<path for="mainClass" dir="src"/>
+		<path for="stateInterface" dir="src/States/Interfaces"/>
+		<path for="stateClasses" dir="src/States"/>
+		<path for="testClasses" dir="tests/Unit"/>
+		<path for="exceptions" dir="src/States/Exceptions"/>
 	</output>
 	<configuration>
 		<!-- NOTE: The value in "fqcn" attribute must be the full qualified class/interface name. -->
@@ -19,7 +19,8 @@
 		<config for="abstractStateClass" fqcn="YourVendor\YourProject\States\AbstractDoorState"/>
 		<config for="illegalTransitionException" fqcn="YourVendor\YourProject\States\Exceptions\IllegalStateTransition"/>
 		<config for="invalidStateStringException" fqcn="YourVendor\YourProject\States\Exceptions\InvalidStateString"/>
-		<config for="testClasses" fqcn="YourVendor\YourProject\Tests\*"/>
+		<!-- NOTE: Leave the "*" as the last namespace component -->
+		<config for="testClasses" fqcn="YourVendor\YourProject\Tests\Unit\*"/>
 	</configuration>
 	<states>
 		<state name="OpenDoorState" query="isOpen" stringRepresentation="open"/>

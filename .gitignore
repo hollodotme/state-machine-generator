@@ -1,6 +1,5 @@
 /.idea/
-/.vagrant/
 /vendor/
-/build/output/
+/build/logs/
 /tests/Unit/*
 !/tests/Unit/.gitkeep

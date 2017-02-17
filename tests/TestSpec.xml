@@ -13,12 +13,13 @@
 		<path for="testClasses" dir="Unit"/>
 	</output>
 	<configuration>
-		<!-- NOTE: The value in "fqcn" attribute must be the full qualified class/interface name. -->
+		<!-- NOTE: The value in "fqcn" attribute must be the full qualified class or interface name. -->
 		<config for="mainClass" fqcn="hollodotme\StateMachineGenerator\Tests\Unit\Fixtures\Door"/>
 		<config for="stateInterface" fqcn="hollodotme\StateMachineGenerator\Tests\Unit\Fixtures\States\Interfaces\DoorState"/>
 		<config for="abstractStateClass" fqcn="hollodotme\StateMachineGenerator\Tests\Unit\Fixtures\States\AbstractDoorState"/>
 		<config for="illegalTransitionException" fqcn="hollodotme\StateMachineGenerator\Tests\Unit\Fixtures\States\Exceptions\IllegalStateTransition"/>
 		<config for="invalidStateStringException" fqcn="hollodotme\StateMachineGenerator\Tests\Unit\Fixtures\States\Exceptions\InvalidStateString"/>
+		<!-- NOTE: Leave the "*" as the last namespace component, as the number of test classes is unknown. -->
 		<config for="testClasses" fqcn="hollodotme\StateMachineGenerator\Tests\Unit\*"/>
 	</configuration>
 	<states>
