@@ -26,11 +26,11 @@ This package is based on the work of [Sebastian Bergmann and his state repositor
 
 Download the current stable PHAR file from the [releases section](https://github.com/hollodotme/state-machine-generator/releases/).
 
-	https://github.com/hollodotme/state-machine-generator/releases/download/vX.X.X/state-machine-generator.phar
+	wget https://github.com/hollodotme/state-machine-generator/releases/download/vX.X.X/state-machine-generator.phar
 	
-If you like verify it with GPG:
+If you like verify it with its GPG signature:
 
-	https://github.com/hollodotme/state-machine-generator/releases/download/vX.X.X/state-machine-generator.phar.asc
+	wget https://github.com/hollodotme/state-machine-generator/releases/download/vX.X.X/state-machine-generator.phar.asc
 
 ## Usage
 
