@@ -5,6 +5,8 @@
 
 namespace hollodotme\StateMachineGenerator\Generator;
 
+use hollodotme\StateMachineGenerator\Generator\Contants\Config;
+use hollodotme\StateMachineGenerator\Generator\Contants\Template;
 use hollodotme\StateMachineGenerator\Generator\Types\OutputFile;
 use hollodotme\StateMachineGenerator\Generator\Types\TemplateFile;
 
@@ -19,10 +21,12 @@ final class AbstractStateClassGenerator extends AbstractGenerator
 		$spec                      = $this->getSpecification();
 		$methodContents            = '';
 		$authorsContent            = join( ', ', $spec->getAuthors() );
-		$methodTemplate            = file_get_contents( (new TemplateFile( 'AbstractStateClassMethod' ))->toString() );
-		$abstractStateClassConfig  = $spec->getConfiguration( 'abstractStateClass' );
-		$stateInterfaceConfig      = $spec->getConfiguration( 'stateInterface' );
-		$transitionExceptionConfig = $spec->getConfiguration( 'illegalTransitionException' );
+		$methodTemplate            = file_get_contents(
+			(new TemplateFile( Template::ABSTRACT_STATE_CLASS_METHOD ))->toString()
+		);
+		$abstractStateClassConfig  = $spec->getConfiguration( Config::ABSTRACT_STATE_CLASS );
+		$stateInterfaceConfig      = $spec->getConfiguration( Config::STATE_INTERFACE );
+		$transitionExceptionConfig = $spec->getConfiguration( Config::ILLEGAL_TRANSITION_EXCEPTION );
 		$outputDir                 = $spec->getOutputSetting( 'stateClasses' )->getDir();
 		$outputFilePath            = $outputDir . DIRECTORY_SEPARATOR . $abstractStateClassConfig->getClassName();
 
@@ -62,7 +66,7 @@ final class AbstractStateClassGenerator extends AbstractGenerator
 				$stateInterfaceConfig->getClassName(),
 				rtrim( $methodContents, "\n" ),
 			],
-			file_get_contents( (new TemplateFile( 'AbstractStateClass' ))->toString() )
+			file_get_contents( (new TemplateFile( Template::ABSTRACT_STATE_CLASS ))->toString() )
 		);
 
 		return new OutputFile( $outputFilePath, $content );

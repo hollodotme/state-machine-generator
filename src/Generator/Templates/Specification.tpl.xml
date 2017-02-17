@@ -5,6 +5,7 @@
 	</meta>
 	<output>
 		<path for="mainClass" dir="./src"/>
+		<path for="stateInterface" dir="./src/States/Interfaces"/>
 		<path for="stateClasses" dir="./src/States"/>
 		<path for="testClass" dir="./tests"/>
 	</output>
