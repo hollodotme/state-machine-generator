@@ -63,4 +63,17 @@ final class State
 	{
 		return $this->transitions;
 	}
+
+	public function hasTransitionForOperation( Operation $operation ) : bool
+	{
+		foreach ( $this->transitions as $transition )
+		{
+			if ( $transition->getOperation() == $operation->getName() )
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
 }

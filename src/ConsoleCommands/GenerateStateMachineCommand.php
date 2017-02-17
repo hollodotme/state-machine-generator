@@ -12,6 +12,7 @@ use hollodotme\StateMachineGenerator\Generator\Specification;
 use hollodotme\StateMachineGenerator\Generator\StateClassGenerator;
 use hollodotme\StateMachineGenerator\Generator\StateInterfaceGenerator;
 use hollodotme\StateMachineGenerator\Generator\StateStringExceptionGenerator;
+use hollodotme\StateMachineGenerator\Generator\TestClassGenerator;
 use hollodotme\StateMachineGenerator\Generator\TransitionsExceptionGenerator;
 use hollodotme\StateMachineGenerator\Generator\Types\SpecificationFile;
 use Symfony\Component\Console\Command\Command;
@@ -59,6 +60,7 @@ final class GenerateStateMachineCommand extends Command
 		foreach ( $specification->getStates() as $state )
 		{
 			$generators[] = new StateClassGenerator( $specification, $state );
+			$generators[] = new TestClassGenerator( $specification, $state );
 		}
 
 		/** @var AbstractGenerator $generator */

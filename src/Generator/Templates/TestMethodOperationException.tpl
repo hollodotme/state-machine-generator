@@ -1,9 +1,16 @@
-/**
-* @covers ___CLASS___::___OPERATION___
-* @covers ___STATE___State::___OPERATION___
-* @expectedException IllegalStateTransitionException
-*/
-public function test___TEST___()
-{
-$this->___OBJECT___->___OPERATION___();
-}
+	/**
+	 * @expectedException \___ILLEGAL_TRANSITION_EXCEPTION_FQCN___
+	 */
+	public function test___TEST___()
+	{
+		try
+		{
+			$this->___OBJECT___->___OPERATION___();
+		}
+		catch(___ILLEGAL_TRANSITION_EXCEPTION_NAME___ $e)
+		{
+			$this->assertEquals('___DESIRED_STATE___', $e->getDesiredState());
+
+			throw $e;
+		}
+	}

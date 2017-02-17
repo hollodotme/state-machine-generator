@@ -55,7 +55,7 @@ final class AbstractStateClassGenerator extends AbstractGenerator
 		foreach ( $spec->getStates() as $state )
 		{
 			$stateConstants[] = sprintf(
-				"const %s = '%s';\n",
+				"protected const %s = '%s';\n",
 				$state->getConstantName(),
 				$state->getStringRepresentation()
 			);

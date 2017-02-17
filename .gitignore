@@ -2,3 +2,5 @@
 /.vagrant/
 /vendor/
 /build/output/
+/tests/Unit/*
+!/tests/Unit/.gitkeep

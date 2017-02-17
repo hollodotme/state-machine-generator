@@ -20,4 +20,6 @@ abstract class Config
 	public const ILLEGAL_TRANSITION_EXCEPTION   = 'illegalTransitionException';
 
 	public const INVALID_STATE_STRING_EXCEPTION = 'invalidStateStringException';
+
+	public const TEST_CLASSES                   = 'testClasses';
 }

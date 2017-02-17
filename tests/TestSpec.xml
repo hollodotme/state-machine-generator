@@ -6,20 +6,20 @@
 	</meta>
 	<output>
 		<!-- NOTE: Paths must be relative to the directory of this file. -->
-		<path for="mainClass" dir="output"/>
-		<path for="stateInterface" dir="output/States/Interfaces"/>
-		<path for="stateClasses" dir="output/States"/>
-		<path for="testClasses" dir="output/tests"/>
-		<path for="exceptions" dir="output/States/Exceptions"/>
+		<path for="mainClass" dir="Unit/Fixtures"/>
+		<path for="stateInterface" dir="Unit/Fixtures/States/Interfaces"/>
+		<path for="stateClasses" dir="Unit/Fixtures/States"/>
+		<path for="exceptions" dir="Unit/Fixtures/States/Exceptions"/>
+		<path for="testClasses" dir="Unit"/>
 	</output>
 	<configuration>
 		<!-- NOTE: The value in "fqcn" attribute must be the full qualified class/interface name. -->
-		<config for="mainClass" fqcn="YourVendor\YourProject\Door"/>
-		<config for="stateInterface" fqcn="YourVendor\YourProject\States\Interfaces\DoorState"/>
-		<config for="abstractStateClass" fqcn="YourVendor\YourProject\States\AbstractDoorState"/>
-		<config for="illegalTransitionException" fqcn="YourVendor\YourProject\States\Exceptions\IllegalStateTransition"/>
-		<config for="invalidStateStringException" fqcn="YourVendor\YourProject\States\Exceptions\InvalidStateString"/>
-		<config for="testClasses" fqcn="YourVendor\YourProject\Tests\*"/>
+		<config for="mainClass" fqcn="hollodotme\StateMachineGenerator\Tests\Unit\Fixtures\Door"/>
+		<config for="stateInterface" fqcn="hollodotme\StateMachineGenerator\Tests\Unit\Fixtures\States\Interfaces\DoorState"/>
+		<config for="abstractStateClass" fqcn="hollodotme\StateMachineGenerator\Tests\Unit\Fixtures\States\AbstractDoorState"/>
+		<config for="illegalTransitionException" fqcn="hollodotme\StateMachineGenerator\Tests\Unit\Fixtures\States\Exceptions\IllegalStateTransition"/>
+		<config for="invalidStateStringException" fqcn="hollodotme\StateMachineGenerator\Tests\Unit\Fixtures\States\Exceptions\InvalidStateString"/>
+		<config for="testClasses" fqcn="hollodotme\StateMachineGenerator\Tests\Unit\*"/>
 	</configuration>
 	<states>
 		<state name="OpenDoorState" query="isOpen" stringRepresentation="open"/>

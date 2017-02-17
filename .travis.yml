@@ -1,0 +1,32 @@
+language: php
+
+php:
+  - 7.1
+  - 7.1snapshot
+
+branches:
+  only:
+    - master
+    - development
+    - /^feature\/.+$/
+    - /^refactoring\/.+$/
+    - /^issue\/.+$/
+
+before_script:
+ - git fetch
+ - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then git checkout "$TRAVIS_BRANCH"; else git checkout -b "$TRAVIS_PULL_REQUEST_BRANCH"; fi
+ - git reset --hard "$TRAVIS_COMMIT"
+ - composer self-update
+ - mkdir -p vendor/bin
+ - composer install -o --prefer-dist --no-interaction
+ - mkdir build/logs
+
+script:
+ - php bin/main.php generate:machine tests/TestSpec.xml
+ - php vendor/bin/phpunit.phar -c build/
+ - php vendor/bin/box.phar build
+ - php build/state-machine-generator.phar generate:machine tests/TestSpec.xml
+ - php vendor/bin/phpunit.phar -c build/
+
+after_success:
+ - travis_retry php vendor/bin/coveralls.phar -v --exclude-no-stmt

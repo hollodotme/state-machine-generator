@@ -1,10 +1,13 @@
+[![Build Status](https://travis-ci.org/hollodotme/state-machine-generator.svg?branch=master)](https://travis-ci.org/hollodotme/state-machine-generator)
+[![Coverage Status](https://coveralls.io/repos/github/hollodotme/state-machine-generator/badge.svg?branch=master)](https://coveralls.io/github/hollodotme/state-machine-generator?branch=master)
+
 # State machine generator
 
-PHP 7+ code generator for OOP state machines
+PHP 7.1 code generator for OOP state machines
 
 This package is based on [Sebastian Bergmann's state repository](https://github.com/sebastianbergmann/state), with the following changes:
 
-* Code was updated for compatibility with php >= 7.0
+* Code was updated for compatibility with php >= 7.1
 * Command based CLI api
 * Only the code generation part was extracted
 * Namespaces were added
