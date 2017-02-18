@@ -32,6 +32,23 @@ final class CreateSpecificationCommand extends Command
 			@mkdir( dirname( $outputFilePath ), 0777, true );
 		}
 
+		if ( file_exists( $outputFilePath ) )
+		{
+			if ( $style->confirm( 'Specification file already exists. Replace it?', false ) )
+			{
+				return $this->copySpecificationFile( $outputFilePath, $style );
+			}
+
+			$style->writeln( 'File not created.' );
+
+			return 0;
+		}
+
+		return $this->copySpecificationFile( $outputFilePath, $style );
+	}
+
+	private function copySpecificationFile( string $outputFilePath, SymfonyStyle $style ) : int
+	{
 		$copyResult = copy( __DIR__ . '/../Generator/Templates/Specification.tpl.xml', $outputFilePath );
 
 		if ( !$copyResult )
