@@ -28,6 +28,11 @@ final class OutputFile
 		return dirname( $this->filePath );
 	}
 
+	public function getFileName() : string
+	{
+		return basename( $this->filePath );
+	}
+
 	public function getFilePath() : string
 	{
 		return $this->filePath;

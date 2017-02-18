@@ -14,6 +14,7 @@ use hollodotme\StateMachineGenerator\Generator\StateInterfaceGenerator;
 use hollodotme\StateMachineGenerator\Generator\StateStringExceptionGenerator;
 use hollodotme\StateMachineGenerator\Generator\TestClassGenerator;
 use hollodotme\StateMachineGenerator\Generator\TransitionsExceptionGenerator;
+use hollodotme\StateMachineGenerator\Generator\Types\OutputFile;
 use hollodotme\StateMachineGenerator\Generator\Types\SpecificationFile;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -40,6 +41,7 @@ final class GenerateStateMachineCommand extends Command
 	{
 		$style    = new SymfonyStyle( $input, $output );
 		$specFile = new SpecificationFile( $input->getArgument( 'specfile' ) );
+		$exitCode = 0;
 
 		if ( !$specFile->exists() )
 		{
@@ -63,6 +65,8 @@ final class GenerateStateMachineCommand extends Command
 			$generators[] = new TestClassGenerator( $specification, $state );
 		}
 
+		$replace = '';
+
 		/** @var AbstractGenerator $generator */
 		foreach ( $generators as $generator )
 		{
@@ -73,18 +77,48 @@ final class GenerateStateMachineCommand extends Command
 				@mkdir( $outputFile->getDir(), 0777, true );
 			}
 
-			$bytesWritten = file_put_contents( $outputFile->getFilePath(), $outputFile->getContent() );
+			if ( file_exists( $outputFile->getFilePath() ) && $replace != 'yes for all' )
+			{
+				if ( $replace == 'no for all' )
+				{
+					$style->writeln( 'Skipping existing file ' . $outputFile->getFilePath() );
+					continue;
+				}
 
-			if ( $bytesWritten > 0 )
-			{
-				$style->writeln( "Generated file {$outputFile->getFilePath()} ({$bytesWritten} bytes)" );
+				$replace = $style->choice(
+					"File '{$outputFile->getFileName()}' already exists. Replace it?",
+					[ 'no', 'no for all', 'yes', 'yes for all' ],
+					'no'
+				);
+
+				if ( in_array( $replace, [ 'no', 'no for all' ] ) )
+				{
+					$style->writeln( 'Skipping existing file ' . $outputFile->getFilePath() );
+					continue;
+				}
 			}
-			else
-			{
-				$style->error( "Could not write file {$outputFile->getFilePath()}" );
-			}
+
+			$exitCode += $this->writeOutputFile( $outputFile, $style );
 		}
 
-		return 0;
+		return $exitCode;
+	}
+
+	private function writeOutputFile( OutputFile $outputFile, SymfonyStyle $style ) : int
+	{
+		$bytesWritten = file_put_contents( $outputFile->getFilePath(), $outputFile->getContent() );
+
+		if ( $bytesWritten > 0 )
+		{
+			$style->writeln( "Generated file {$outputFile->getFilePath()} ({$bytesWritten} bytes)" );
+
+			return 0;
+		}
+		else
+		{
+			$style->error( "Could not write file {$outputFile->getFilePath()}" );
+
+			return 1;
+		}
 	}
 }
